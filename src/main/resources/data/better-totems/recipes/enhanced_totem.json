@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FEF",
+    "EDE",
+    "FEF"
+  ],
+  "key": {
+    "F": {
+      "item": "better-totems:totem_fragment"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "better-totems:enhanced_totem"
+  }
+}

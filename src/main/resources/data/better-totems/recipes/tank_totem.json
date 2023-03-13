@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ECE",
+    "CTC",
+    "ECE"
+  ],
+  "key": {
+    "E": {
+      "item": "better-totems:enhanced_totem"
+    },
+    "C": {
+      "item": "minecraft:chorus_fruit"
+    },
+    "T": {
+      "item": "minecraft:turtle_helmet"
+    }
+  },
+  "result": {
+    "item": "better-totems:tank_totem"
+  }
+}

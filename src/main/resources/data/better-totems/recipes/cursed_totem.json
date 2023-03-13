@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GEF",
+    "E E",
+    "FEG"
+  ],
+  "key": {
+    "F": {
+      "item": "better-totems:totem_fragment"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "better-totems:cursed_totem"
+  }
+}

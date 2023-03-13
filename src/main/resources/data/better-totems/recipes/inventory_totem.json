@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FEF",
+    "ESE",
+    "FEF"
+  ],
+  "key": {
+    "F": {
+      "item": "better-totems:totem_fragment"
+    },
+    "E": {
+      "item": "minecraft:emerald_block"
+    },
+    "S": {
+      "item": "minecraft:shulker_shell"
+    }
+  },
+  "result": {
+    "item": "better-totems:inventory_totem"
+  }
+}

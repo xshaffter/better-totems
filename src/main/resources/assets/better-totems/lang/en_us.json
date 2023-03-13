@@ -1,0 +1,22 @@
+{
+  "item.better-totems.heart": "Heart",
+  "item.better-totems.heart_fragment": "Heart fragment",
+  "item.better-totems.enhanced_totem": "Enhanced totem of undying",
+  "item.better-totems.inventory_totem": "Totem of pardon",
+  "item.better-totems.tank_totem": "Totem of the tank",
+  "item.better-totems.cursed_totem": "Cursed totem",
+  "item.better-totems.totem_fragment": "Totem fragment",
+  "item.better-totems.tank_totem.tooltip": "This totem gives you health and more bonuses as well as debuffs",
+  "item.better-totems.tank_totem.tooltip.shift": "This totem gives you health, resistance,",
+  "item.better-totems.tank_totem.tooltip.shift2": "regeneration, slowness, weakness and mining fatigue",
+  "item.better-totems.enhanced_totem.tooltip": "This totem has a better chance of avoiding your death",
+  "item.better-totems.enhanced_totem.tooltip.shift": "This totem has a 80% chance of avoiding your death",
+  "item.better-totems.cursed_totem.tooltip": "This totem has a full chance of reviving... at a cost",
+  "item.better-totems.cursed_totem.tooltip.shift": "This totem has a full chance of reviving",
+  "item.better-totems.cursed_totem.tooltip.shift2": "but you will revive with a random curse",
+  "item.better-totems.inventory_totem.tooltip": "This totem doesn't avoid your death",
+  "item.better-totems.inventory_totem.tooltip2": "but will keep your inventory intact",
+  "effect.better-totems.no_life": "Life curse",
+  "effect.better-totems.no_armor": "Armor?",
+  "enchantment.better-totems.regeneration": "Natural regeneration"
+}

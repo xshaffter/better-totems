@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smithing",
+
+  "base": {
+    "item": "better-totems:heart_fragment"
+  },
+  "addition": {
+    "item": "better-totems:heart_fragment"
+  },
+  "result": {
+    "item": "better-totems:heart"
+  }
+}

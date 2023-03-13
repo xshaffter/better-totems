@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "better-totems",
+  "version": "${version}",
+  "name": "Better Totems",
+  "description": "Add new totems and modify the standard totem to be less effective",
+  "authors": [
+    "paraformax"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/better-totems/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "paraformax.bettertotems.client.BetterTotemsClient"
+    ],
+    "main": [
+      "paraformax.bettertotems.BetterTotems"
+    ]
+  },
+  "mixins": [
+    "better-totems.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.17",
+    "fabric": "*",
+    "minecraft": "1.19.3"
+  }
+}

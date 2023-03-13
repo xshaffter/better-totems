@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EBE",
+    "EHE",
+    "EBE"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:experience_bottle"
+    },
+    "B": {
+      "item": "minecraft:book"
+    },
+    "H": {
+      "item": "better-totems:heart"
+    }
+  },
+  "result": {
+    "item": "better-totems:regeneration"
+  }
+}
