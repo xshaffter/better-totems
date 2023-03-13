@@ -19,7 +19,8 @@ public class CursedTotem extends PerfectTotem {
     private final List<StatusEffectInstance> CURSES = List.of(
             new StatusEffectInstance(StatusEffects.BLINDNESS, 10*20, 0),
             new StatusEffectInstance(ModEffects.NO_LIFE, 120*20, 0),
-            new StatusEffectInstance(ModEffects.NO_ARMOR, 60*20, 0)
+            new StatusEffectInstance(ModEffects.NO_ARMOR, 120*20, 0),
+            new StatusEffectInstance(ModEffects.NO_EFFECT, 120*20, 0)
     );
     public CursedTotem() {
         super(List.of(), List.of(), List.of());

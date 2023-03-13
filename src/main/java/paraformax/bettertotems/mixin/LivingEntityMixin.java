@@ -1,27 +1,34 @@
 package paraformax.bettertotems.mixin;
 
-import paraformax.bettertotems.items.BaseTotem;
-import paraformax.bettertotems.items.CustomTotem;
-import paraformax.bettertotems.items.NormalTotem;
-import paraformax.bettertotems.util.IEntityDataSaver;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import paraformax.bettertotems.ModEffects;
+import paraformax.bettertotems.effects.Curse;
+import paraformax.bettertotems.items.BaseTotem;
+import paraformax.bettertotems.items.CustomTotem;
+import paraformax.bettertotems.items.NormalTotem;
+import paraformax.bettertotems.util.IEntityDataSaver;
+
+import java.util.Map;
 
 import static paraformax.bettertotems.items.CustomTotem.isCustomTotem;
 
@@ -29,15 +36,6 @@ import static paraformax.bettertotems.items.CustomTotem.isCustomTotem;
 public abstract class LivingEntityMixin extends Entity implements IEntityDataSaver {
 
     private NbtCompound persistentData;
-
-    @Shadow
-    public native boolean clearStatusEffects();
-
-    @Shadow
-    public native void setHealth(float health);
-
-    @Shadow
-    public native boolean addStatusEffect(StatusEffectInstance statusEffectInstance_1);
 
 
     public LivingEntityMixin(EntityType<?> type, World world) {
@@ -52,6 +50,44 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
 
     @Shadow
     public abstract boolean canBeRiddenInWater();
+
+
+    @Shadow
+    public abstract boolean hasStatusEffect(StatusEffect effect);
+
+    @Inject(at = @At("HEAD"), method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z", cancellable = true)
+    public void onAddStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callback) {
+        //noinspection ConstantConditions
+        if (!this.hasStatusEffect(ModEffects.NO_EFFECT) && ((Entity) this) instanceof LivingEntity living) {
+            callback.setReturnValue(living.addStatusEffect(effect, null));
+            return;
+        }
+        callback.setReturnValue(false);
+    }
+
+
+    @Inject(at = @At("HEAD"), method = "clearStatusEffects", cancellable = true)
+    public void onClearStatusEffects(CallbackInfoReturnable<Boolean> callback) {
+        if (this.world.isClient) {
+            callback.setReturnValue(false);
+        }
+
+        boolean bl = false;
+        if (((Entity) this) instanceof LivingEntity living) {
+            var effects = living.getStatusEffects().stream().map(StatusEffectInstance::getEffectType).toList();
+            for (var effect : effects) {
+                boolean byPass;
+                byPass = ((Entity) this) instanceof ServerPlayerEntity player && player.getAbilities().creativeMode;
+
+                if (byPass || !(effect instanceof Curse)) {
+                    living.removeStatusEffect(effect);
+                    bl = true;
+                }
+            }
+        }
+        //noinspection ConstantConditions
+        callback.setReturnValue(bl);
+    }
 
     @Inject(at = @At("HEAD"), method = "tryUseTotem", cancellable = true)
     public void useCustomTotem(DamageSource source, CallbackInfoReturnable<Boolean> callback) {

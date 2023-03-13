@@ -18,5 +18,6 @@
   "item.better-totems.inventory_totem.tooltip2": "but will keep your inventory intact",
   "effect.better-totems.no_life": "Life curse",
   "effect.better-totems.no_armor": "Armor?",
+  "effect.better-totems.no_effect": "Unenhanced",
   "enchantment.better-totems.regeneration": "Natural regeneration"
 }

@@ -40,9 +40,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements IE
 
     private List<StatModified> onHandUUIDS = List.of();
     private Item lastOffHand = null;
-    private int[] tickCounters = new int[]{
-            0, 0, 0, 0
-    };
 
     public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile) {
         super(world, pos, yaw, gameProfile);
