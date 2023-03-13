@@ -1,14 +1,8 @@
-package paraformax.bettertotems.effects;
+package paraformax.bettertotems.effects.curses;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import paraformax.bettertotems.BetterTotems;
-
-import java.util.stream.Collectors;
 
 public class NoEffectCurse extends Curse {
     public NoEffectCurse() {

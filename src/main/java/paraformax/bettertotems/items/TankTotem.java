@@ -1,5 +1,8 @@
 package paraformax.bettertotems.items;
 
+import com.google.common.collect.ImmutableMultimap;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttribute;
 import paraformax.bettertotems.util.StatModifier;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
@@ -27,10 +30,11 @@ public class TankTotem extends PerfectTotem {
         ), Arrays.asList(
                 new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 0),
                 new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 200, 0),
-                new StatusEffectInstance(StatusEffects.WEAKNESS, 200, 2)
-        ), List.of(
-                new StatModifier(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier("tank_totem_health", 4, EntityAttributeModifier.Operation.ADDITION))
+                new StatusEffectInstance(StatusEffects.WEAKNESS, 200, 0)
+        ), ImmutableMultimap.of(
+                EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier("tank_totem_health", 4, EntityAttributeModifier.Operation.ADDITION)
         ));
+
     }
 
     @Override
@@ -43,6 +47,7 @@ public class TankTotem extends PerfectTotem {
         }
     }
 
+    @SuppressWarnings("unused")
     @Override
     public boolean performResurrection(DamageSource source, Entity entity) {
         LivingEntity resurrected = (LivingEntity) entity;

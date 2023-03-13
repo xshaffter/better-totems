@@ -16,9 +16,10 @@ import java.util.List;
 public class EnhancedTotem extends CustomTotem {
 
     public EnhancedTotem() {
-        super(new Item.Settings(), 80, List.of(), List.of(), List.of());
+        super(new Item.Settings(), 80, List.of(), List.of());
     }
 
+    @SuppressWarnings("unused")
     @Override
     public boolean performResurrection(DamageSource source, Entity resurrected) {
         boolean resurrect = checkProbability();

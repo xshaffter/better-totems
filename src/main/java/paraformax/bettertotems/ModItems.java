@@ -33,9 +33,7 @@ public class ModItems {
     }
 
     private static void addItemToGroup(ItemGroup group, Item item) {
-        ItemGroupEvents.modifyEntriesEvent(group).register(entries -> {
-            entries.add(item);
-        });
+        ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.add(item));
     }
 
     public static void registerModItems() {

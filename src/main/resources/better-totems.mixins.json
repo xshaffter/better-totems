@@ -4,8 +4,7 @@
   "package": "paraformax.bettertotems.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "LivingEntityMixin",
-    "ServerPlayerEntityMixin"
+    "LivingEntityMixin"
   ],
   "client": [
   ],

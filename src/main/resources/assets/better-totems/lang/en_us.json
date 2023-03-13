@@ -9,6 +9,7 @@
   "item.better-totems.tank_totem.tooltip": "This totem gives you health and more bonuses as well as debuffs",
   "item.better-totems.tank_totem.tooltip.shift": "This totem gives you health, resistance,",
   "item.better-totems.tank_totem.tooltip.shift2": "regeneration, slowness, weakness and mining fatigue",
+  "item.better-totems.tank_totem.extra_health": "+2 hearts",
   "item.better-totems.enhanced_totem.tooltip": "This totem has a better chance of avoiding your death",
   "item.better-totems.enhanced_totem.tooltip.shift": "This totem has a 80% chance of avoiding your death",
   "item.better-totems.cursed_totem.tooltip": "This totem has a full chance of reviving... at a cost",
@@ -19,5 +20,6 @@
   "effect.better-totems.no_life": "Life curse",
   "effect.better-totems.no_armor": "Armor?",
   "effect.better-totems.no_effect": "Unenhanced",
+  "effect.better-totems.no_damage": "Curse of the weak",
   "enchantment.better-totems.regeneration": "Natural regeneration"
 }

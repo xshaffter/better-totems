@@ -16,7 +16,7 @@ public class Heart extends Item {
                 .food(new FoodComponent.Builder()
                         .hunger(0)
                         .alwaysEdible()
-                        .statusEffect(new StatusEffectInstance(ModEffects.INCREASE_LIFE, 0), 1)
+                        .statusEffect(new StatusEffectInstance(ModEffects.INCREASE_LIFE, 0, 0, false, false), 1)
                         .snack()
                         .build()
                 )

@@ -1,5 +1,6 @@
 package paraformax.bettertotems;
 
+import paraformax.bettertotems.config.ModConfigs;
 import paraformax.bettertotems.events.PlayerRespawnHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
@@ -12,6 +13,7 @@ public class BetterTotems implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        ModConfigs.registerConfigs();
         ModItems.registerModItems();
         ModEffects.registerEffects();
         ModLootTables.modifyLootTables();

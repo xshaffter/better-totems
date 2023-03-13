@@ -1,17 +1,9 @@
-package paraformax.bettertotems.effects;
+package paraformax.bettertotems.effects.curses;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import paraformax.bettertotems.BetterTotems;
-import paraformax.bettertotems.mixin.LivingEntityMixin;
 import paraformax.bettertotems.util.LivingEntityBridge;
-
-import java.util.UUID;
 
 public class NoLifeCurse extends Curse {
     public NoLifeCurse() {

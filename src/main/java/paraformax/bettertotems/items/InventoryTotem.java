@@ -17,7 +17,7 @@ import java.util.Objects;
 public class InventoryTotem extends PerfectTotem {
 
     public InventoryTotem() {
-        super(List.of(), List.of(), List.of());
+        super(List.of(), List.of());
     }
 
     @Override
@@ -26,6 +26,7 @@ public class InventoryTotem extends PerfectTotem {
         tooltip.add(Text.translatable("item.better-totems.inventory_totem.tooltip2"));
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void postRevive(Entity resurrected) {
         super.postRevive(resurrected);

@@ -1,8 +1,9 @@
-package paraformax.bettertotems.items;
+package paraformax.bettertotems.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 
+@SuppressWarnings("unused")
 public interface BaseTotem {
 
     boolean checkProbability();

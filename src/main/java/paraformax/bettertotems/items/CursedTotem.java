@@ -23,7 +23,7 @@ public class CursedTotem extends PerfectTotem {
             new StatusEffectInstance(ModEffects.NO_EFFECT, 120*20, 0)
     );
     public CursedTotem() {
-        super(List.of(), List.of(), List.of());
+        super(List.of(), List.of());
     }
 
     @Override
@@ -36,6 +36,7 @@ public class CursedTotem extends PerfectTotem {
         }
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void postRevive(Entity entity) {
         Random rand = new Random();
