@@ -145,7 +145,7 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
             }
             if (totem != null && totem.isOf(ModItems.INVENTORY_TOTEM)) {
                 var totem_item = (InventoryTotem) totem.getItem();
-                totem_item.postRevive(this);
+                totem_item.performResurrection(this);
                 callback.setReturnValue(0f);
                 return;
             }
@@ -158,6 +158,10 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
             returnedAmount = DamageUtil.getDamageLeft(returnedAmount, this.getArmor(), (float) this.getAttributeValue(EntityAttributes.GENERIC_ARMOR_TOUGHNESS));
         }
         callback.setReturnValue(returnedAmount);
+    }
+    @Inject(at = @At("HEAD"), method = "attackLivingEntity")
+    public void a(LivingEntity target, CallbackInfo ci) {
+
     }
 
     @Inject(at = @At("HEAD"), method = "tryUseTotem", cancellable = true)

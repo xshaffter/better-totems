@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 public class CursedTotem extends PerfectTotem {
-    private final List<StatusEffectInstance> CURSES = List.of(
+    private final List<StatusEffectInstance> ON_DEATH_CURSES = List.of(
             new StatusEffectInstance(StatusEffects.BLINDNESS, 10*20, 0),
             new StatusEffectInstance(ModEffects.NO_LIFE, 120*20, 0),
             new StatusEffectInstance(ModEffects.NO_ARMOR, 120*20, 0),
@@ -40,10 +40,10 @@ public class CursedTotem extends PerfectTotem {
     @Override
     public void postRevive(Entity entity) {
         Random rand = new Random();
-        int randomCurse = rand.nextInt(CURSES.size());
+        int randomCurse = rand.nextInt(ON_DEATH_CURSES.size());
         LivingEntity user = (LivingEntity) entity;
         user.setHealth(1);
-        user.addStatusEffect(CURSES.get(randomCurse));
+        user.addStatusEffect(ON_DEATH_CURSES.get(randomCurse));
         user.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
         user.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
         user.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));

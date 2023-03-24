@@ -12,13 +12,9 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Rarity;
 import net.minecraft.world.World;
-import paraformax.bettertotems.BetterTotems;
 import paraformax.bettertotems.util.BaseTotem;
-import paraformax.bettertotems.util.LivingEntityBridge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +23,8 @@ import java.util.Random;
 @SuppressWarnings("unused")
 public abstract class CustomTotem extends Item implements BaseTotem {
 
-    protected final List<StatusEffectInstance> EFFECTS;
-    protected final List<StatusEffectInstance> CURSES;
+    protected final List<StatusEffectInstance> PASSIVE_EFFECTS;
+    protected final List<StatusEffectInstance> PASSIVE_CURSES;
     protected final Multimap<EntityAttribute, EntityAttributeModifier> STAT_MODIFIERS;
     public final int resurrectionProbability;
 
@@ -41,8 +37,8 @@ public abstract class CustomTotem extends Item implements BaseTotem {
     ) {
         super(settings.rarity(Rarity.EPIC).maxCount(1));
         this.resurrectionProbability = resurrectionProbability;
-        EFFECTS = effects;
-        CURSES = curses;
+        PASSIVE_EFFECTS = effects;
+        PASSIVE_CURSES = curses;
         STAT_MODIFIERS = statModifiers;
     }
 
@@ -98,8 +94,8 @@ public abstract class CustomTotem extends Item implements BaseTotem {
 
     public void whileHolding(LivingEntity resurrected) {
         var statuses = new ArrayList<StatusEffectInstance>(List.of());
-        var effects = EFFECTS.stream().filter(it -> !resurrected.hasStatusEffect(it.getEffectType()));
-        var curses = CURSES.stream().filter(it -> !resurrected.hasStatusEffect(it.getEffectType()));
+        var effects = PASSIVE_EFFECTS.stream().filter(it -> !resurrected.hasStatusEffect(it.getEffectType()));
+        var curses = PASSIVE_CURSES.stream().filter(it -> !resurrected.hasStatusEffect(it.getEffectType()));
         statuses.addAll(effects.toList());
         statuses.addAll(curses.toList());
 
@@ -110,8 +106,8 @@ public abstract class CustomTotem extends Item implements BaseTotem {
 
     public void removeEffects(LivingEntity entity) {
         var statuses = new ArrayList<StatusEffectInstance>(List.of());
-        var effects = EFFECTS.stream().filter(it -> entity.hasStatusEffect(it.getEffectType()));
-        var curses = CURSES.stream().filter(it -> entity.hasStatusEffect(it.getEffectType()));
+        var effects = PASSIVE_EFFECTS.stream().filter(it -> entity.hasStatusEffect(it.getEffectType()));
+        var curses = PASSIVE_CURSES.stream().filter(it -> entity.hasStatusEffect(it.getEffectType()));
         statuses.addAll(effects.toList());
         statuses.addAll(curses.toList());
 

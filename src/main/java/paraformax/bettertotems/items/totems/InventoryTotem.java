@@ -1,12 +1,11 @@
 package paraformax.bettertotems.items.totems;
 
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
@@ -15,7 +14,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import paraformax.bettertotems.BetterTotems;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,9 +34,8 @@ public class InventoryTotem extends PerfectTotem {
         return true;
     }
 
-    @SuppressWarnings("unused")
     @Override
-    public void postRevive(Entity resurrected) {
+    public void performResurrection(Entity resurrected) {
         if (resurrected instanceof ServerPlayerEntity player) {
             player.clearStatusEffects();
             player.setFireTicks(0);
@@ -63,6 +60,10 @@ public class InventoryTotem extends PerfectTotem {
 
             player.teleport(dimension, spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ(), player.getYaw(), player.getPitch());
         }
-        super.postRevive(resurrected);
+    }
+    @SuppressWarnings("unused")
+    @Override
+    public void postRevive(Entity resurrected) {
+        resurrected.world.sendEntityStatus(resurrected, EntityStatuses.USE_TOTEM_OF_UNDYING);
     }
 }

@@ -6,7 +6,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import paraformax.bettertotems.effects.IncreaseLifeEffect;
 import paraformax.bettertotems.effects.curses.NoArmorCurse;
-import paraformax.bettertotems.effects.curses.NoDamageCurse;
 import paraformax.bettertotems.effects.curses.NoEffectCurse;
 import paraformax.bettertotems.effects.curses.NoLifeCurse;
 
@@ -15,7 +14,6 @@ public class ModEffects {
     public static final StatusEffect NO_ARMOR = new NoArmorCurse();
     public static final StatusEffect INCREASE_LIFE = new IncreaseLifeEffect();
     public static final StatusEffect NO_EFFECT = new NoEffectCurse();
-    public static final StatusEffect NO_DAMAGE = new NoDamageCurse();
 
     private static void registerEffect(String name, StatusEffect effect) {
         Registry.register(Registries.STATUS_EFFECT, new Identifier(BetterTotems.MOD_ID, name), effect);
@@ -26,6 +24,5 @@ public class ModEffects {
         registerEffect("no_armor", NO_ARMOR);
         registerEffect("increase_life", INCREASE_LIFE);
         registerEffect("no_effect", NO_EFFECT);
-        registerEffect("no_damage", NO_DAMAGE);
     }
 }
