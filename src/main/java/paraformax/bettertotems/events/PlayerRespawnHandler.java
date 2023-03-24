@@ -13,7 +13,6 @@ public class PlayerRespawnHandler implements ServerPlayerEvents.AfterRespawn {
         var newAttribute = newEntity.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
         assert oldAttribute != null;
         assert newAttribute != null;
-        BetterTotems.LOGGER.info(oldAttribute.getModifiers());
         newAttribute.setFrom(oldAttribute);
     }
 }
