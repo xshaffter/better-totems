@@ -1,6 +1,7 @@
-package paraformax.bettertotems.items;
+package paraformax.bettertotems.items.totems;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -22,12 +23,17 @@ public class NormalTotem implements BaseTotem {
         return doResurrection <= resurrectionProbability;
     }
 
-    @SuppressWarnings("unused")
-    public boolean performResurrection(DamageSource source, Entity resurrected) {
+    @Override
+    public boolean canRevive(DamageSource source, Entity resurrected) {
         if (source.isOutOfWorld()){
             return false;
         }
         return checkProbability();
+    }
+
+    @SuppressWarnings("unused")
+    public void performResurrection(Entity resurrected) {
+        resurrected.world.sendEntityStatus(resurrected, EntityStatuses.USE_TOTEM_OF_UNDYING);
     }
 
 

@@ -1,7 +1,6 @@
 package paraformax.bettertotems.util;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 
 @SuppressWarnings("unused")

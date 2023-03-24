@@ -1,4 +1,4 @@
-package paraformax.bettertotems.items;
+package paraformax.bettertotems.items.totems;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import paraformax.bettertotems.items.totems.CustomTotem;
 
 import java.util.List;
 
@@ -21,14 +22,9 @@ public class EnhancedTotem extends CustomTotem {
 
     @SuppressWarnings("unused")
     @Override
-    public boolean performResurrection(DamageSource source, Entity resurrected) {
-        boolean resurrect = checkProbability();
-        if (resurrect) {
-            var entity = ((LivingEntity) resurrected);
-            entity.setHealth(entity.getMaxHealth());
-        }
-
-        return resurrect;
+    public void performResurrection(Entity resurrected) {
+        var entity = ((LivingEntity) resurrected);
+        entity.setHealth(entity.getMaxHealth());
     }
 
     @Override

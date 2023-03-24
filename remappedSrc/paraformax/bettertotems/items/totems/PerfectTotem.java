@@ -1,10 +1,8 @@
-package paraformax.bettertotems.items;
+package paraformax.bettertotems.items.totems;
 
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
-import paraformax.bettertotems.util.StatModifier;
 import net.minecraft.entity.effect.StatusEffectInstance;
 
 import java.util.List;

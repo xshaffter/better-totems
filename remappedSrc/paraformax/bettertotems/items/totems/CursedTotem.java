@@ -1,4 +1,4 @@
-package paraformax.bettertotems.items;
+package paraformax.bettertotems.items.totems;
 
 import paraformax.bettertotems.ModEffects;
 import net.minecraft.client.gui.screen.Screen;

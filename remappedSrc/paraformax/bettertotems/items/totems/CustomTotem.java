@@ -1,20 +1,13 @@
-package paraformax.bettertotems.items;
+package paraformax.bettertotems.items.totems;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.MultimapBuilder;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
-import paraformax.bettertotems.BetterTotems;
 import paraformax.bettertotems.util.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -91,13 +84,18 @@ public abstract class CustomTotem extends Item implements BaseTotem {
         return item instanceof CustomTotem;
     }
 
-    @SuppressWarnings("unused")
     @Override
-    public boolean performResurrection(DamageSource source, Entity resurrected) {
+    public boolean canRevive(DamageSource source, Entity resurrected) {
         if (source.isOutOfWorld()) {
             return false;
         }
         return checkProbability();
+    }
+
+    @SuppressWarnings("unused")
+    @Override
+    public void performResurrection(Entity resurrected) {
+        resurrected.world.sendEntityStatus(resurrected, EntityStatuses.USE_TOTEM_OF_UNDYING);
     }
 
     public void whileHolding(LivingEntity resurrected) {

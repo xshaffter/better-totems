@@ -2,6 +2,7 @@ package paraformax.bettertotems.effects.curses;
 
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.DamageModifierStatusEffect;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
 public abstract class DamageModifierCurse extends DamageModifierStatusEffect {
