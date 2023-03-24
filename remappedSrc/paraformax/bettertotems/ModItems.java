@@ -1,6 +1,5 @@
 package paraformax.bettertotems;
 
-import net.minecraft.item.Items;
 import paraformax.bettertotems.items.*;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
@@ -38,7 +37,7 @@ public class ModItems {
     }
 
     private static void addItemToGroup(ItemGroup group, Item item) {
-        ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.addAfter(Items.TOTEM_OF_UNDYING , item));
+        ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.add(item));
     }
 
     public static void registerModItems() {

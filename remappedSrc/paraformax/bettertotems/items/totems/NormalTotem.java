@@ -1,26 +1,20 @@
-package paraformax.bettertotems.items;
+package paraformax.bettertotems.items.totems;
 
-import paraformax.bettertotems.util.StatModifier;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import paraformax.bettertotems.util.BaseTotem;
 
-import java.util.List;
 import java.util.Random;
 
-public class NormalTotem implements BaseTotem{
-    protected List<StatusEffectInstance> EFFECTS;
-    protected List<StatusEffectInstance> CURSES;
-    protected List<StatModifier> STAT_MODIFIERS;
-    public int resurrectionProbability;
+public class NormalTotem implements BaseTotem {
+    public final int resurrectionProbability;
 
     public NormalTotem() {
         this.resurrectionProbability = 50;
-        EFFECTS = List.of();
-        CURSES = List.of();
-        STAT_MODIFIERS = List.of();
     }
 
     public boolean checkProbability() {
@@ -29,14 +23,21 @@ public class NormalTotem implements BaseTotem{
         return doResurrection <= resurrectionProbability;
     }
 
-    public boolean performResurrection(DamageSource source, Entity resurrected) {
+    @Override
+    public boolean canRevive(DamageSource source, Entity resurrected) {
         if (source.isOutOfWorld()){
             return false;
         }
         return checkProbability();
     }
 
+    @SuppressWarnings("unused")
+    public void performResurrection(Entity resurrected) {
+        resurrected.world.sendEntityStatus(resurrected, EntityStatuses.USE_TOTEM_OF_UNDYING);
+    }
 
+
+    @SuppressWarnings("unused")
     public void postRevive(Entity entity) {
         if (entity instanceof LivingEntity living) {
             living.setHealth(1.0f);

@@ -18,5 +18,8 @@
   "item.better-totems.inventory_totem.tooltip2": "but will keep your inventory intact",
   "effect.better-totems.no_life": "Maldición de vida",
   "effect.better-totems.no_armor": "Armadura?",
-  "enchantment.better-totems.regeneration": "Regeneración natural"
+  "effect.better-totems.no_effect": "Inmejorable",
+  "effect.better-totems.no_damage": "Maldición del débil",
+  "enchantment.better-totems.regeneration": "Regeneración natural",
+  "item.better-totems.tank_totem.extra_health": "+2 Corazones"
 }

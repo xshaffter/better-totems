@@ -1,20 +1,15 @@
 package paraformax.bettertotems.mixin;
 
-import net.minecraft.entity.DamageUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -24,21 +19,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import paraformax.bettertotems.BetterTotems;
 import paraformax.bettertotems.ModEffects;
-import paraformax.bettertotems.ModItems;
 import paraformax.bettertotems.config.ModConfigs;
 import paraformax.bettertotems.effects.curses.Curse;
-import paraformax.bettertotems.items.totems.CustomTotem;
-import paraformax.bettertotems.items.totems.InventoryTotem;
-import paraformax.bettertotems.items.totems.NormalTotem;
 import paraformax.bettertotems.util.BaseTotem;
+import paraformax.bettertotems.items.totems.CustomTotem;
+import paraformax.bettertotems.items.totems.NormalTotem;
 import paraformax.bettertotems.util.IEntityDataSaver;
 import paraformax.bettertotems.util.IEntityTickCounter;
 
-import java.util.Objects;
-
 import static paraformax.bettertotems.items.totems.CustomTotem.isCustomTotem;
+
+import java.util.List;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements IEntityDataSaver, IEntityTickCounter {
@@ -68,7 +60,14 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
     public abstract void writeCustomDataToNbt(NbtCompound nbt);
 
     @Shadow
+    public abstract boolean canBeRiddenInWater();
+
+
+    @Shadow
     public abstract boolean hasStatusEffect(StatusEffect effect);
+
+    @Shadow
+    public abstract void heal(float amount);
 
     @Shadow
     public abstract float getHealth();
@@ -78,19 +77,6 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
 
     @Shadow
     public abstract void setHealth(float health);
-
-    @Shadow
-    public abstract double getAttributeValue(EntityAttribute attribute);
-
-    @Shadow
-    public abstract int getArmor();
-
-    @Shadow
-    public abstract void damageArmor(DamageSource source, float amount);
-
-    @Shadow public abstract boolean damage(DamageSource source, float amount);
-
-    @Shadow public abstract void damageHelmet(DamageSource source, float amount);
 
     @Inject(at = @At("HEAD"), method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z", cancellable = true)
     public void onAddStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callback) {
@@ -129,40 +115,6 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
         callback.setReturnValue(bl);
     }
 
-    @Inject(at = @At("HEAD"), method = "applyArmorToDamage", cancellable = true)
-    public void onApplyDamage(DamageSource source, float amount, CallbackInfoReturnable<Float> callback) {
-        float returnedAmount = amount;
-
-        if (source.isOf(DamageTypes.OUT_OF_WORLD)) {
-            ItemStack offhand_stack = this.getStackInHand(Hand.OFF_HAND);
-            ItemStack main_hand_stack = this.getStackInHand(Hand.MAIN_HAND);
-
-            ItemStack totem = null;
-            if (isCustomTotem(offhand_stack.getItem()) || offhand_stack.isOf(Items.TOTEM_OF_UNDYING)) {
-                totem = offhand_stack;
-            } else if (isCustomTotem(main_hand_stack.getItem()) || main_hand_stack.isOf(Items.TOTEM_OF_UNDYING)) {
-                totem = main_hand_stack;
-            }
-            if (totem != null && totem.isOf(ModItems.INVENTORY_TOTEM)) {
-                var totem_item = (InventoryTotem) totem.getItem();
-                totem_item.performResurrection(this);
-                callback.setReturnValue(0f);
-                return;
-            }
-        }
-
-        if (this.hasStatusEffect(ModEffects.NO_ARMOR)) {
-            callback.setReturnValue(returnedAmount);
-        } else if (!source.isIn(DamageTypeTags.BYPASSES_ARMOR)) {
-            this.damageArmor(source, returnedAmount);
-            returnedAmount = DamageUtil.getDamageLeft(returnedAmount, this.getArmor(), (float) this.getAttributeValue(EntityAttributes.GENERIC_ARMOR_TOUGHNESS));
-        }
-        callback.setReturnValue(returnedAmount);
-    }
-    @Inject(at = @At("HEAD"), method = "attackLivingEntity")
-    public void a(LivingEntity target, CallbackInfo ci) {
-
-    }
 
     @Inject(at = @At("HEAD"), method = "tryUseTotem", cancellable = true)
     public void useCustomTotem(DamageSource source, CallbackInfoReturnable<Boolean> callback) {
