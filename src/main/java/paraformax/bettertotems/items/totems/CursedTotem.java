@@ -1,6 +1,6 @@
 package paraformax.bettertotems.items.totems;
 
-import paraformax.bettertotems.ModEffects;
+import paraformax.bettertotems.effects.ModEffects;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;

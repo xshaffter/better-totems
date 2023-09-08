@@ -64,6 +64,6 @@ public class InventoryTotem extends PerfectTotem {
     @SuppressWarnings("unused")
     @Override
     public void postRevive(Entity resurrected) {
-        resurrected.world.sendEntityStatus(resurrected, EntityStatuses.USE_TOTEM_OF_UNDYING);
+        resurrected.getWorld().sendEntityStatus(resurrected, EntityStatuses.USE_TOTEM_OF_UNDYING);
     }
 }

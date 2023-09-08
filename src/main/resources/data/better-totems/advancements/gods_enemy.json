@@ -1,0 +1,25 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:totem_of_undying"
+    },
+    "title": "God's enemy",
+    "description": "The god of resurrection hates you",
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "rewards": {
+    "recipes": [
+      "better-totems:totem_fragment",
+      "better-totems:enhanced_fragment",
+      "better-totems:cursed_fragment"
+    ]
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "better-totems:dummy"
+    }
+  }
+}

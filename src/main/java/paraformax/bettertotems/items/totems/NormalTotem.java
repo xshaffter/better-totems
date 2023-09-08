@@ -30,7 +30,7 @@ public class NormalTotem implements BaseTotem {
 
     @SuppressWarnings("unused")
     public void performResurrection(Entity resurrected) {
-        resurrected.world.sendEntityStatus(resurrected, EntityStatuses.USE_TOTEM_OF_UNDYING);
+        resurrected.getWorld().sendEntityStatus(resurrected, EntityStatuses.USE_TOTEM_OF_UNDYING);
     }
 
 

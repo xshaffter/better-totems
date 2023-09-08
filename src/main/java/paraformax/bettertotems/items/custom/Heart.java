@@ -1,6 +1,6 @@
-package paraformax.bettertotems.items;
+package paraformax.bettertotems.items.custom;
 
-import paraformax.bettertotems.ModEffects;
+import paraformax.bettertotems.effects.ModEffects;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;

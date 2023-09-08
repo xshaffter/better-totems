@@ -89,7 +89,7 @@ public abstract class CustomTotem extends Item implements BaseTotem {
     @SuppressWarnings("unused")
     @Override
     public void performResurrection(Entity resurrected) {
-        resurrected.world.sendEntityStatus(resurrected, EntityStatuses.USE_TOTEM_OF_UNDYING);
+        resurrected.getWorld().sendEntityStatus(resurrected, EntityStatuses.USE_TOTEM_OF_UNDYING);
     }
 
     public void whileHolding(LivingEntity resurrected) {

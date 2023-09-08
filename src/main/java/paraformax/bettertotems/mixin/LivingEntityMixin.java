@@ -10,12 +10,14 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,19 +26,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import paraformax.bettertotems.BetterTotems;
-import paraformax.bettertotems.ModEffects;
-import paraformax.bettertotems.ModItems;
 import paraformax.bettertotems.config.ModConfigs;
+import paraformax.bettertotems.effects.ModEffects;
 import paraformax.bettertotems.effects.curses.Curse;
+import paraformax.bettertotems.items.ModItems;
 import paraformax.bettertotems.items.totems.CustomTotem;
 import paraformax.bettertotems.items.totems.InventoryTotem;
 import paraformax.bettertotems.items.totems.NormalTotem;
 import paraformax.bettertotems.util.BaseTotem;
 import paraformax.bettertotems.util.IEntityDataSaver;
 import paraformax.bettertotems.util.IEntityTickCounter;
-
-import java.util.Objects;
+import paraformax.bettertotems.util.PlayerEntityBridge;
 
 import static paraformax.bettertotems.items.totems.CustomTotem.isCustomTotem;
 
@@ -88,9 +88,8 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
     @Shadow
     public abstract void damageArmor(DamageSource source, float amount);
 
-    @Shadow public abstract boolean damage(DamageSource source, float amount);
-
-    @Shadow public abstract void damageHelmet(DamageSource source, float amount);
+    @Shadow
+    public abstract boolean damage(DamageSource source, float amount);
 
     @Inject(at = @At("HEAD"), method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z", cancellable = true)
     public void onAddStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callback) {
@@ -111,8 +110,9 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
 
     @Inject(at = @At("HEAD"), method = "clearStatusEffects", cancellable = true)
     public void onClearStatusEffects(CallbackInfoReturnable<Boolean> callback) {
-        if (this.world.isClient) {
+        if (this.getWorld().isClient) {
             callback.setReturnValue(false);
+            return;
         }
 
         boolean bl = false;
@@ -159,6 +159,7 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
         }
         callback.setReturnValue(returnedAmount);
     }
+
     @Inject(at = @At("HEAD"), method = "attackLivingEntity")
     public void a(LivingEntity target, CallbackInfo ci) {
 
@@ -168,6 +169,16 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
     public void useCustomTotem(DamageSource source, CallbackInfoReturnable<Boolean> callback) {
         //initializes PlayerEntity entity, which is a copy of this cast to Living Entity and then PlayerEntity
         LivingEntityMixin entity = this;
+        int totems_used = PlayerEntityBridge.getResurrection(this);
+        if (totems_used < 3) {
+            if (totems_used == 2) {
+                this.sendMessage(Text.literal("The god of resurrection is angry with you"));
+                this.sendMessage(Text.literal("Totems now have a 50% chance of working"));
+                PlayerEntityBridge.grantAdvancement(this, "gods_enemy");
+
+            }
+            return;
+        }
 
         //ItemStack object that is set to the offhand item that entity is carrying
         ItemStack offhand_stack = entity.getStackInHand(Hand.OFF_HAND);
@@ -195,6 +206,7 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
                 totem_item.performResurrection(this);
                 totem.decrement(1);
                 totem_item.postRevive(this);
+                PlayerEntityBridge.increaseResurrection(this);
             }
 
             callback.setReturnValue(resurrect);

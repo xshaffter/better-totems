@@ -1,4 +1,4 @@
-package paraformax.bettertotems.items;
+package paraformax.bettertotems.items.custom;
 
 import net.minecraft.item.Item;
 

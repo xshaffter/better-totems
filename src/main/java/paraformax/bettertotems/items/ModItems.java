@@ -1,7 +1,8 @@
-package paraformax.bettertotems;
+package paraformax.bettertotems.items;
 
 import net.minecraft.item.Items;
-import paraformax.bettertotems.items.*;
+import net.minecraft.registry.RegistryKey;
+import paraformax.bettertotems.BetterTotems;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -9,6 +10,9 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import paraformax.bettertotems.items.custom.Heart;
+import paraformax.bettertotems.items.custom.HeartFragment;
+import paraformax.bettertotems.items.custom.TotemFragment;
 import paraformax.bettertotems.items.totems.CursedTotem;
 import paraformax.bettertotems.items.totems.EnhancedTotem;
 import paraformax.bettertotems.items.totems.InventoryTotem;
@@ -37,7 +41,7 @@ public class ModItems {
         addItemToGroup(ItemGroups.FOOD_AND_DRINK, HEART);
     }
 
-    private static void addItemToGroup(ItemGroup group, Item item) {
+    private static void addItemToGroup(RegistryKey<ItemGroup> group, Item item) {
         ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.addAfter(Items.TOTEM_OF_UNDYING , item));
     }
 
