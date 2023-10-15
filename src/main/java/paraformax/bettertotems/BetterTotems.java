@@ -3,6 +3,7 @@ package paraformax.bettertotems;
 import paraformax.bettertotems.config.ModConfigs;
 import paraformax.bettertotems.effects.ModEffects;
 import paraformax.bettertotems.events.AdvancementManager;
+import paraformax.bettertotems.events.GameRuleManager;
 import paraformax.bettertotems.events.PlayerRespawnHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
@@ -21,6 +22,7 @@ public class BetterTotems implements ModInitializer {
         ModEffects.registerEffects();
         ModLootTables.modifyLootTables();
         AdvancementManager.registerCriterions();
+        GameRuleManager.registerGamerules();
         ServerPlayerEvents.AFTER_RESPAWN.register(new PlayerRespawnHandler());
 
         LOGGER.info("BETTER TOTEMS initialized");

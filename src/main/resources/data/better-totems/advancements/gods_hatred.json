@@ -1,0 +1,24 @@
+{
+  "display": {
+    "icon": {
+      "item": "better-totems:tank_totem"
+    },
+    "title": "God's hatred",
+    "description": "The god of resurrection wants you death",
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "rewards": {
+    "recipes": [
+      "better-totems:tank_totem",
+      "better-totems:chorus_totem"
+    ]
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "better-totems:dummy"
+    }
+  }
+}

@@ -8,21 +8,21 @@ public class LivingEntityBridge {
 
     public static NbtCompound getPersistentData(Entity entity) {
         var living = (IEntityDataSaver) entity;
-        return living.getPersistentData();
+        return living.better_totems$getPersistentData();
     }
 
     public static int getTickCounter(LivingEntity living) {
         var counter = (IEntityTickCounter) living;
-        return counter.getTickCounter();
+        return counter.better_totems$getTickCounter();
     }
 
     public static void tick(LivingEntity living) {
         var counter = (IEntityTickCounter) living;
-        counter.setTickCounter(getTickCounter(living) + 1);
+        counter.better_totems$setTickCounter(getTickCounter(living) + 1);
     }
 
     public static void reset(LivingEntity living) {
         var counter = (IEntityTickCounter) living;
-        counter.setTickCounter(0);
+        counter.better_totems$setTickCounter(0);
     }
 }

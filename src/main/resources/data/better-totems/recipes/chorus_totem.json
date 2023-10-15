@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MCM",
+    "CEC",
+    "MCM"
+  ],
+  "key": {
+    "E": {
+      "item": "better-totems:enhanced_totem"
+    },
+    "C": {
+      "item": "minecraft:chorus_fruit"
+    },
+    "M": {
+      "item": "minecraft:emerald"
+    }
+  },
+  "result": {
+    "item": "better-totems:tank_totem"
+  }
+}

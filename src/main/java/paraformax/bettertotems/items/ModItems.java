@@ -13,16 +13,14 @@ import net.minecraft.util.Identifier;
 import paraformax.bettertotems.items.custom.Heart;
 import paraformax.bettertotems.items.custom.HeartFragment;
 import paraformax.bettertotems.items.custom.TotemFragment;
-import paraformax.bettertotems.items.totems.CursedTotem;
-import paraformax.bettertotems.items.totems.EnhancedTotem;
-import paraformax.bettertotems.items.totems.InventoryTotem;
-import paraformax.bettertotems.items.totems.TankTotem;
+import paraformax.bettertotems.items.totems.*;
 
 public class ModItems {
     public static final Item ENHANCED_TOTEM = new EnhancedTotem();
     public static final Item INVENTORY_TOTEM = new InventoryTotem();
     public static final Item TANK_TOTEM = new TankTotem();
     public static final Item CURSED_TOTEM = new CursedTotem();
+    public static final Item CHORUS_TOTEM = new ChorusTotem();
     public static final Item TOTEM_FRAGMENT = new TotemFragment();
     public static final Item HEART = new Heart();
     public static final Item HEART_FRAGMENT = new HeartFragment();
@@ -36,6 +34,7 @@ public class ModItems {
         addItemToGroup(ItemGroups.COMBAT, INVENTORY_TOTEM);
         addItemToGroup(ItemGroups.COMBAT, TANK_TOTEM);
         addItemToGroup(ItemGroups.COMBAT, CURSED_TOTEM);
+        addItemToGroup(ItemGroups.COMBAT, CHORUS_TOTEM);
         addItemToGroup(ItemGroups.INGREDIENTS, TOTEM_FRAGMENT);
         addItemToGroup(ItemGroups.INGREDIENTS, HEART_FRAGMENT);
         addItemToGroup(ItemGroups.FOOD_AND_DRINK, HEART);
@@ -50,6 +49,7 @@ public class ModItems {
         registerItem("inventory_totem", INVENTORY_TOTEM);
         registerItem("tank_totem", TANK_TOTEM);
         registerItem("cursed_totem", CURSED_TOTEM);
+        registerItem("chorus_totem", CHORUS_TOTEM);
         registerItem("totem_fragment", TOTEM_FRAGMENT);
         registerItem("heart", HEART);
         registerItem("heart_fragment", HEART_FRAGMENT);

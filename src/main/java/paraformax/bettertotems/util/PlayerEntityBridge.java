@@ -8,6 +8,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import paraformax.bettertotems.BetterTotems;
+import paraformax.bettertotems.mixin.LivingEntityMixin;
 
 public class PlayerEntityBridge {
     public static void increaseResurrection(Entity living) {
@@ -36,12 +37,13 @@ public class PlayerEntityBridge {
             }
         }
     }
-
-
-    public static boolean hasAdvancement(ServerPlayerEntity player, final String advancement) {
-        var adv = getAdvancement(player.server, advancement);
-        var progress = player.getAdvancementTracker().getProgress(adv);
-        return progress.isDone();
+    public static boolean hasAdvancement(Entity entity, final String advancement) {
+        if (entity instanceof ServerPlayerEntity player) {
+            var adv = getAdvancement(player.server, advancement);
+            var progress = player.getAdvancementTracker().getProgress(adv);
+            return progress.isDone();
+        }
+        return false;
     }
 
 }

@@ -8,7 +8,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextColor;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -36,6 +39,9 @@ public class InventoryTotem extends PerfectTotem {
 
     @Override
     public void performResurrection(Entity resurrected) {
+        if (resurrected.getWorld().isClient) {
+            return;
+        }
         if (resurrected instanceof ServerPlayerEntity player) {
             player.clearStatusEffects();
             player.setFireTicks(0);
@@ -52,11 +58,10 @@ public class InventoryTotem extends PerfectTotem {
 
             var attributeManager = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
             if (attributeManager != null) {
+                player.sendMessage(Text.literal("The ").setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.RED))).append(Text.literal("god of resurrection").setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.GREEN)).withUnderline(true))).append(Text.literal(" is angry with you").setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.RED)))));
+                player.sendMessage(Text.literal("You've lost 2 maximum hearts").setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.RED))));
                 attributeManager.setBaseValue(attributeManager.getBaseValue() - 4);
             }
-            BetterTotems.LOGGER.info(player);
-            BetterTotems.LOGGER.info(dimension);
-            BetterTotems.LOGGER.info(spawnPoint);
 
             player.teleport(dimension, spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ(), player.getYaw(), player.getPitch());
         }

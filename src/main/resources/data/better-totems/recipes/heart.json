@@ -1,12 +1,14 @@
 {
-  "type": "minecraft:smithing",
-
-  "base": {
-    "item": "better-totems:heart_fragment"
-  },
-  "addition": {
-    "item": "better-totems:heart_fragment"
-  },
+  "type": "minecraft:crafting_shapeless",
+  "category": "combat",
+  "ingredients": [
+    {
+      "item": "better-totems:heart_fragment"
+    },
+    {
+      "item": "better-totems:heart_fragment"
+    }
+  ],
   "result": {
     "item": "better-totems:heart"
   }
