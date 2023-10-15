@@ -16,11 +16,13 @@ public class LivingEntityBridge {
         return counter.better_totems$getTickCounter();
     }
 
+    @SuppressWarnings("unused")
     public static void tick(LivingEntity living) {
         var counter = (IEntityTickCounter) living;
         counter.better_totems$setTickCounter(getTickCounter(living) + 1);
     }
 
+    @SuppressWarnings("unused")
     public static void reset(LivingEntity living) {
         var counter = (IEntityTickCounter) living;
         counter.better_totems$setTickCounter(0);

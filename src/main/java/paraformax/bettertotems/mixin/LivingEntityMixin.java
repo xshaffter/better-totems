@@ -10,7 +10,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
@@ -40,13 +39,17 @@ import paraformax.bettertotems.items.ModItems;
 import paraformax.bettertotems.items.totems.CustomTotem;
 import paraformax.bettertotems.items.totems.InventoryTotem;
 import paraformax.bettertotems.items.totems.NormalTotem;
-import paraformax.bettertotems.util.*;
+import paraformax.bettertotems.util.BaseTotem;
+import paraformax.bettertotems.util.IEntityDataSaver;
+import paraformax.bettertotems.util.LivingEntityBridge;
+import paraformax.bettertotems.util.PlayerEntityBridge;
 
 import static paraformax.bettertotems.items.totems.CustomTotem.isCustomTotem;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements IEntityDataSaver {
 
+    @Unique
     private NbtCompound persistentData;
 
     @SuppressWarnings("unused")

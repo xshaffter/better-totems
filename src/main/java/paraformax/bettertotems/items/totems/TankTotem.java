@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import paraformax.bettertotems.BetterTotems;
 
 import java.util.Arrays;
 import java.util.List;
