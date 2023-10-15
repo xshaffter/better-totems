@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import paraformax.bettertotems.BetterTotems;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,12 +21,13 @@ public class TankTotem extends PerfectTotem {
 
     public TankTotem() {
         super(Arrays.asList(
-                new StatusEffectInstance(StatusEffects.REGENERATION, -1, 0),
-                new StatusEffectInstance(StatusEffects.RESISTANCE, -1, 1)
+                new StatusEffectInstance(StatusEffects.REGENERATION, StatusEffectInstance.INFINITE, 0),
+                new StatusEffectInstance(StatusEffects.RESISTANCE, StatusEffectInstance.INFINITE, 1)
         ), Arrays.asList(
-                new StatusEffectInstance(StatusEffects.SLOWNESS, -1, 0),
-                new StatusEffectInstance(StatusEffects.MINING_FATIGUE, -1, 0),
-                new StatusEffectInstance(StatusEffects.WEAKNESS, -1, 0)
+                new StatusEffectInstance(StatusEffects.SLOWNESS, StatusEffectInstance.INFINITE, 0),
+                new StatusEffectInstance(StatusEffects.MINING_FATIGUE, StatusEffectInstance.INFINITE, 0),
+                new StatusEffectInstance(StatusEffects.WEAKNESS, StatusEffectInstance.INFINITE, 0),
+                new StatusEffectInstance(StatusEffects.HUNGER, StatusEffectInstance.INFINITE, 1)
         ), ImmutableMultimap.of(
                 EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier("tank_totem_health", 4, EntityAttributeModifier.Operation.ADDITION)
         ));

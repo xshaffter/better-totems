@@ -8,6 +8,7 @@ import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.util.Identifier;
+import paraformax.bettertotems.items.ModItems;
 
 public class ModLootTables {
     private static final Identifier BASTION_TREASURE_LOOT_TABLE_ID = new Identifier("minecraft:chests/bastion_treasure");

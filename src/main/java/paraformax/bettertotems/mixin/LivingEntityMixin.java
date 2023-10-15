@@ -16,45 +16,41 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.text.TextColor;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import paraformax.bettertotems.BetterTotems;
-import paraformax.bettertotems.ModEffects;
-import paraformax.bettertotems.ModItems;
 import paraformax.bettertotems.config.ModConfigs;
+import paraformax.bettertotems.effects.ModEffects;
 import paraformax.bettertotems.effects.curses.Curse;
+import paraformax.bettertotems.events.GameRuleManager;
+import paraformax.bettertotems.items.ModItems;
 import paraformax.bettertotems.items.totems.CustomTotem;
 import paraformax.bettertotems.items.totems.InventoryTotem;
 import paraformax.bettertotems.items.totems.NormalTotem;
 import paraformax.bettertotems.util.BaseTotem;
 import paraformax.bettertotems.util.IEntityDataSaver;
-import paraformax.bettertotems.util.IEntityTickCounter;
-
-import java.util.Objects;
+import paraformax.bettertotems.util.LivingEntityBridge;
+import paraformax.bettertotems.util.PlayerEntityBridge;
 
 import static paraformax.bettertotems.items.totems.CustomTotem.isCustomTotem;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements IEntityDataSaver, IEntityTickCounter {
+public abstract class LivingEntityMixin extends Entity implements IEntityDataSaver {
 
-    private int tickCount = 0;
+    @Unique
     private NbtCompound persistentData;
-
-    @Override
-    public int getTickCounter() {
-        return tickCount;
-    }
-
-    @Override
-    public void setTickCounter(int count) {
-        tickCount = count;
-    }
 
     @SuppressWarnings("unused")
     public LivingEntityMixin(EntityType<?> type, World world) {
@@ -88,18 +84,17 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
     @Shadow
     public abstract void damageArmor(DamageSource source, float amount);
 
-    @Shadow public abstract boolean damage(DamageSource source, float amount);
+    @Shadow
+    public abstract boolean damage(DamageSource source, float amount);
 
-    @Shadow public abstract void damageHelmet(DamageSource source, float amount);
-
-    @Inject(at = @At("HEAD"), method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z", cancellable = true)
-    public void onAddStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callback) {
-        //noinspection ConstantConditions
-        if (!this.hasStatusEffect(ModEffects.NO_EFFECT) && ((Entity) this) instanceof LivingEntity living) {
-            callback.setReturnValue(living.addStatusEffect(effect, null));
+    @Inject(at = @At("HEAD"), method = "canHaveStatusEffect", cancellable = true)
+    public void canHaveStatusEffects(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
+        System.out.println(effect);
+        if (this.hasStatusEffect(ModEffects.NO_EFFECT) && effect.getEffectType().isBeneficial()) {
+            cir.setReturnValue(false);
             return;
         }
-        callback.setReturnValue(false);
+        System.out.println(effect);
     }
 
     @Inject(at = @At("RETURN"), method = "tick")
@@ -109,10 +104,12 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
         }
     }
 
+    @SuppressWarnings("ConstantValue")
     @Inject(at = @At("HEAD"), method = "clearStatusEffects", cancellable = true)
     public void onClearStatusEffects(CallbackInfoReturnable<Boolean> callback) {
-        if (this.world.isClient) {
+        if (this.getWorld().isClient) {
             callback.setReturnValue(false);
+            return;
         }
 
         boolean bl = false;
@@ -125,7 +122,6 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
                 bl = true;
             }
         }
-        //noinspection ConstantConditions
         callback.setReturnValue(bl);
     }
 
@@ -143,6 +139,7 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
             } else if (isCustomTotem(main_hand_stack.getItem()) || main_hand_stack.isOf(Items.TOTEM_OF_UNDYING)) {
                 totem = main_hand_stack;
             }
+
             if (totem != null && totem.isOf(ModItems.INVENTORY_TOTEM)) {
                 var totem_item = (InventoryTotem) totem.getItem();
                 totem_item.performResurrection(this);
@@ -153,21 +150,33 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
 
         if (this.hasStatusEffect(ModEffects.NO_ARMOR)) {
             callback.setReturnValue(returnedAmount);
+            return;
         } else if (!source.isIn(DamageTypeTags.BYPASSES_ARMOR)) {
             this.damageArmor(source, returnedAmount);
             returnedAmount = DamageUtil.getDamageLeft(returnedAmount, this.getArmor(), (float) this.getAttributeValue(EntityAttributes.GENERIC_ARMOR_TOUGHNESS));
         }
         callback.setReturnValue(returnedAmount);
     }
-    @Inject(at = @At("HEAD"), method = "attackLivingEntity")
-    public void a(LivingEntity target, CallbackInfo ci) {
-
-    }
 
     @Inject(at = @At("HEAD"), method = "tryUseTotem", cancellable = true)
     public void useCustomTotem(DamageSource source, CallbackInfoReturnable<Boolean> callback) {
         //initializes PlayerEntity entity, which is a copy of this cast to Living Entity and then PlayerEntity
+        if (this.getWorld().isClient) {
+            callback.setReturnValue(false);
+            return;
+        }
+
         LivingEntityMixin entity = this;
+        int totems_used = PlayerEntityBridge.getResurrection(this);
+        int tolerance = getWorld().getGameRules().getInt(GameRuleManager.RESURRECTION_GOD_TOLERANCE);
+        if (totems_used < tolerance && !PlayerEntityBridge.hasAdvancement(this, "gods_enemy")) {
+            if (totems_used >= tolerance - 1) {
+                this.sendMessage(Text.literal("The ").setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.RED))).append(Text.literal("god of resurrection").setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.GREEN)).withUnderline(true))).append(Text.literal(" is angry with you").setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.RED)))));
+                this.sendMessage(Text.literal("Totems now have a 50% chance of working").setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.RED))));
+                this.getWorld().playSound(null, this.getBlockPos(), SoundEvents.ENTITY_WITHER_SPAWN, SoundCategory.AMBIENT);
+                PlayerEntityBridge.grantAdvancement(this, "gods_enemy");
+            }
+        }
 
         //ItemStack object that is set to the offhand item that entity is carrying
         ItemStack offhand_stack = entity.getStackInHand(Hand.OFF_HAND);
@@ -189,12 +198,20 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
             } else {
                 totem_item = new NormalTotem();
             }
-            boolean resurrect = totem_item.canRevive(source, this);
+
+            boolean resurrect = totems_used < 3 || totem_item.canRevive(source, this);
 
             if (resurrect) {
+                if (totems_used >= (tolerance * 5) - 1 && !PlayerEntityBridge.hasAdvancement(this, "gods_hatred")) {
+                    this.sendMessage(Text.literal("The ").setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.RED))).append(Text.literal("god of resurrection").setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.GREEN)).withUnderline(true))).append(Text.literal(" is furious").setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.RED)))));
+                    this.sendMessage(Text.literal("You won't naturally regenerate life").setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.RED))));
+                    LivingEntityBridge.getPersistentData(this).putBoolean("disableHealing", true);
+                    PlayerEntityBridge.grantAdvancement(this, "gods_hatred");
+                }
                 totem_item.performResurrection(this);
                 totem.decrement(1);
                 totem_item.postRevive(this);
+                PlayerEntityBridge.increaseResurrection(this);
             }
 
             callback.setReturnValue(resurrect);
@@ -205,7 +222,7 @@ public abstract class LivingEntityMixin extends Entity implements IEntityDataSav
     }
 
     @Override
-    public NbtCompound getPersistentData() {
+    public NbtCompound better_totems$getPersistentData() {
         if (persistentData == null) {
             persistentData = new NbtCompound();
         }

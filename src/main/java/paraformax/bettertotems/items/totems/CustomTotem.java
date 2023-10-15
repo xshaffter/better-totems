@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Rarity;
 import net.minecraft.world.World;
 import paraformax.bettertotems.util.BaseTotem;
+import paraformax.bettertotems.util.LivingEntityBridge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,10 +90,13 @@ public abstract class CustomTotem extends Item implements BaseTotem {
     @SuppressWarnings("unused")
     @Override
     public void performResurrection(Entity resurrected) {
-        resurrected.world.sendEntityStatus(resurrected, EntityStatuses.USE_TOTEM_OF_UNDYING);
+        resurrected.getWorld().sendEntityStatus(resurrected, EntityStatuses.USE_TOTEM_OF_UNDYING);
     }
 
     public void whileHolding(LivingEntity resurrected) {
+        var persistentData = LivingEntityBridge.getPersistentData(resurrected);
+        persistentData.putBoolean("holdingTotem", true);
+
         var statuses = new ArrayList<StatusEffectInstance>(List.of());
         var effects = PASSIVE_EFFECTS.stream().filter(it -> !resurrected.hasStatusEffect(it.getEffectType()));
         var curses = PASSIVE_CURSES.stream().filter(it -> !resurrected.hasStatusEffect(it.getEffectType()));
@@ -105,14 +109,20 @@ public abstract class CustomTotem extends Item implements BaseTotem {
     }
 
     public void removeEffects(LivingEntity entity) {
-        var statuses = new ArrayList<StatusEffectInstance>(List.of());
-        var effects = PASSIVE_EFFECTS.stream().filter(it -> entity.hasStatusEffect(it.getEffectType()));
-        var curses = PASSIVE_CURSES.stream().filter(it -> entity.hasStatusEffect(it.getEffectType()));
-        statuses.addAll(effects.toList());
-        statuses.addAll(curses.toList());
+        var persistentData = LivingEntityBridge.getPersistentData(entity);
+        boolean holdingTotem = persistentData.getBoolean("holdingTotem");
 
-        for (var effect : statuses) {
-            entity.removeStatusEffect(effect.getEffectType());
+        if (holdingTotem && !entity.getOffHandStack().isOf(this)) {
+            var statuses = new ArrayList<StatusEffectInstance>(List.of());
+            var effects = PASSIVE_EFFECTS.stream().filter(it -> entity.hasStatusEffect(it.getEffectType()));
+            var curses = PASSIVE_CURSES.stream().filter(it -> entity.hasStatusEffect(it.getEffectType()));
+            statuses.addAll(effects.toList());
+            statuses.addAll(curses.toList());
+
+            for (var effect : statuses) {
+                entity.removeStatusEffect(effect.getEffectType());
+            }
+            persistentData.putBoolean("holdingTotem", false);
         }
     }
 

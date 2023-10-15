@@ -1,9 +1,10 @@
-package paraformax.bettertotems;
+package paraformax.bettertotems.effects;
 
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import paraformax.bettertotems.BetterTotems;
 import paraformax.bettertotems.effects.IncreaseLifeEffect;
 import paraformax.bettertotems.effects.curses.NoArmorCurse;
 import paraformax.bettertotems.effects.curses.NoEffectCurse;

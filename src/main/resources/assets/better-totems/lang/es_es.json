@@ -4,6 +4,7 @@
   "item.better-totems.enhanced_totem": "Totem mejorado",
   "item.better-totems.inventory_totem": "Totem del perdón",
   "item.better-totems.tank_totem": "Totem del tanque",
+  "item.better-totems.chorus_totem": "Totem del transporte",
   "item.better-totems.cursed_totem": "Totem maldito",
   "item.better-totems.totem_fragment": "Fragmento de totem",
   "item.better-totems.tank_totem.tooltip": "This totem gives you health and more bonuses as well as debuffs",
@@ -11,6 +12,7 @@
   "item.better-totems.tank_totem.tooltip.shift2": "regeneration, slowness, weakness and mining fatigue",
   "item.better-totems.enhanced_totem.tooltip": "This totem has a better chance of avoiding your death",
   "item.better-totems.enhanced_totem.tooltip.shift": "This totem has a 80% chance of avoiding your death",
+  "item.better-totems.chorus_totem.tooltip": "Este totem te teletransportará al morir",
   "item.better-totems.cursed_totem.tooltip": "This totem has a full chance of reviving... at a cost",
   "item.better-totems.cursed_totem.tooltip.shift": "This totem has a full chance of reviving",
   "item.better-totems.cursed_totem.tooltip.shift2": "but you will revive with a random curse",
@@ -20,6 +22,5 @@
   "effect.better-totems.no_armor": "Armadura?",
   "effect.better-totems.no_effect": "Inmejorable",
   "effect.better-totems.no_damage": "Maldición del débil",
-  "enchantment.better-totems.regeneration": "Regeneración natural",
-  "item.better-totems.tank_totem.extra_health": "+2 Corazones"
+  "enchantment.better-totems.regeneration": "Regeneración natural"
 }
