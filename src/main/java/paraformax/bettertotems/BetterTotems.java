@@ -1,5 +1,6 @@
 package paraformax.bettertotems;
 
+import paraformax.bettertotems.blocks.ModBlocks;
 import paraformax.bettertotems.config.ModConfigs;
 import paraformax.bettertotems.effects.ModEffects;
 import paraformax.bettertotems.events.AdvancementManager;
@@ -17,8 +18,12 @@ public class BetterTotems implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        //TODO: RESPAWN ALTAR
+        //TODO: third step = PERMADEATH
+
         ModConfigs.registerConfigs();
         ModItems.registerModItems();
+        ModBlocks.registerModBlocks();
         ModEffects.registerEffects();
         ModLootTables.modifyLootTables();
         AdvancementManager.registerCriterions();

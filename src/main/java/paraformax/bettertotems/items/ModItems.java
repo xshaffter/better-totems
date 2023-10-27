@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 import paraformax.bettertotems.BetterTotems;
 import paraformax.bettertotems.items.custom.Heart;
 import paraformax.bettertotems.items.custom.HeartFragment;
+import paraformax.bettertotems.items.custom.VoodooTotem;
 import paraformax.bettertotems.items.custom.TotemFragment;
 import paraformax.bettertotems.items.totems.*;
 
@@ -24,6 +25,7 @@ public class ModItems {
     public static final Item TOTEM_FRAGMENT = new TotemFragment();
     public static final Item HEART = new Heart();
     public static final Item HEART_FRAGMENT = new HeartFragment();
+    public static final Item VOODOO_TOTEM = new VoodooTotem();
 
     private static void registerItem(String name, Item item) {
         Registry.register(Registries.ITEM, new Identifier(BetterTotems.MOD_ID, name), item);
@@ -37,6 +39,7 @@ public class ModItems {
         addItemToGroup(ItemGroups.COMBAT, CHORUS_TOTEM);
         addItemToGroup(ItemGroups.INGREDIENTS, TOTEM_FRAGMENT);
         addItemToGroup(ItemGroups.INGREDIENTS, HEART_FRAGMENT);
+        addItemToGroup(ItemGroups.INGREDIENTS, VOODOO_TOTEM);
         addItemToGroup(ItemGroups.FOOD_AND_DRINK, HEART);
     }
 
@@ -54,6 +57,7 @@ public class ModItems {
         registerItem("totem_fragment", TOTEM_FRAGMENT);
         registerItem("heart", HEART);
         registerItem("heart_fragment", HEART_FRAGMENT);
+        registerItem("voodoo_totem", VOODOO_TOTEM);
         addItemsToGroups();
     }
 }

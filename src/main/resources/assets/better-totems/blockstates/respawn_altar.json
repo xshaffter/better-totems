@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "better-totems:block/respawn_altar"
+    }
+  }
+}
