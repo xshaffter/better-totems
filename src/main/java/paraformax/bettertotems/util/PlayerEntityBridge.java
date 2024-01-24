@@ -28,6 +28,9 @@ public class PlayerEntityBridge {
     }
 
     public static void grantAdvancement(Entity entity, final String advancement) {
+        if (advancement.isEmpty()) {
+            return;
+        }
         if (entity instanceof ServerPlayerEntity player) {
             var adv = getAdvancement(player.server, advancement);
             var unobtained = player.getAdvancementTracker().getProgress(adv).getUnobtainedCriteria();
@@ -36,8 +39,12 @@ public class PlayerEntityBridge {
             }
         }
     }
+
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean hasAdvancement(Entity entity, final String advancement) {
+        if (advancement.isEmpty()) {
+            return true;
+        }
         if (entity instanceof ServerPlayerEntity player) {
             var adv = getAdvancement(player.server, advancement);
             var progress = player.getAdvancementTracker().getProgress(adv);

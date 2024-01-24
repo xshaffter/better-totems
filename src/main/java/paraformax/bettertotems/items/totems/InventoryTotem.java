@@ -38,9 +38,6 @@ public class InventoryTotem extends PerfectTotem {
 
     @Override
     public void performResurrection(Entity resurrected) {
-        if (resurrected.getWorld().isClient) {
-            return;
-        }
         if (resurrected instanceof ServerPlayerEntity player) {
             player.clearStatusEffects();
             player.setFireTicks(0);

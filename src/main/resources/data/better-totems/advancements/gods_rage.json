@@ -1,10 +1,10 @@
 {
   "display": {
     "icon": {
-      "item": "better-totems:tank_totem"
+      "item": "better-totems:inventory_totem"
     },
-    "title": "God's hatred",
-    "description": "The god of resurrection wants you death",
+    "title": "God's rage",
+    "description": "The god of death went mad",
     "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,

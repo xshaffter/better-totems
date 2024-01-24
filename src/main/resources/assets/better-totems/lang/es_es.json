@@ -22,5 +22,7 @@
   "effect.better-totems.no_armor": "Armadura?",
   "effect.better-totems.no_effect": "Inmejorable",
   "effect.better-totems.no_damage": "Maldición del débil",
-  "enchantment.better-totems.regeneration": "Regeneración natural"
+  "enchantment.better-totems.regeneration": "Regeneración natural",
+  "block.better-totems.respawn_altar.error.already_on_use": "Este altar ya está en uso",
+  "block.better-totems.respawn_altar.error.already_has_one": "Ya tienes un altar en uso"
 }

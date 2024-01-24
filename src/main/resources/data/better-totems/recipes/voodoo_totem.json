@@ -13,10 +13,10 @@
       "item": "minecraft:emerald_block"
     },
     "C": {
-      "item": "better-totems:kuchara"
+      "item": "minecraft:iron_nugget"
     }
   },
   "result": {
-    "item": "better-totems:spawn_altar"
+    "item": "better-totems:voodoo_totem"
   }
 }

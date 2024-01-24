@@ -4,7 +4,7 @@
       "item": "minecraft:totem_of_undying"
     },
     "title": "God's enemy",
-    "description": "The god of resurrection hates you",
+    "description": "The god of death hates you",
     "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,

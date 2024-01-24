@@ -22,5 +22,7 @@
   "effect.better-totems.no_armor": "Armor?",
   "effect.better-totems.no_effect": "Unenhanced",
   "effect.better-totems.no_damage": "Curse of the weak",
-  "enchantment.better-totems.regeneration": "Natural regeneration"
+  "enchantment.better-totems.regeneration": "Natural regeneration",
+  "block.better-totems.respawn_altar.error.already_on_use": "This altar is already on usage",
+  "block.better-totems.respawn_altar.error.already_has_one": "You already have an altar"
 }
